@@ -1,33 +1,33 @@
 const catchError = require("../utils/catchError");
+const Continent = require("../models/Contitent");
 const Country = require("../models/Country");
-const City = require("../models/City");
 
 const getAll = catchError(async (req, res) => {
-  const results = await Country.findAll({ include: [City] });
+  const results = await Continent.findAll({ include: [Country] });
   return res.json(results);
 });
 
 const create = catchError(async (req, res) => {
-  const result = await Country.create(req.body);
+  const result = await Continent.create(req.body);
   return res.status(201).json(result);
 });
 
 const getOne = catchError(async (req, res) => {
   const { id } = req.params;
-  const result = await Country.findByPk(id);
+  const result = await Continent.findByPk(id);
   if (!result) return res.sendStatus(404);
   return res.json(result);
 });
 
 const remove = catchError(async (req, res) => {
   const { id } = req.params;
-  await Country.destroy({ where: { id } });
+  await Continent.destroy({ where: { id } });
   return res.sendStatus(204);
 });
 
 const update = catchError(async (req, res) => {
   const { id } = req.params;
-  const result = await Country.update(req.body, {
+  const result = await Continent.update(req.body, {
     where: { id },
     returning: true,
   });
